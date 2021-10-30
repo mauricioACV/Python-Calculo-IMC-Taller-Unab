@@ -1,0 +1,5 @@
+# folders
+/__pycache__
+/.vs
+/Helpers/__pycache__/ 
+/Handlers/__pycache__/
