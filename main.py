@@ -1,6 +1,7 @@
 from tkinter import *
-from Helpers import helpersFunctions as hf
+from Helpers import helpersWindowValidation as hv
 from Handlers import handlerImc as himc
+from Behaviors import windowBehavior as wb
 
 user_mail_global=""
 user_gender_global=""
@@ -9,8 +10,7 @@ user_gender_global=""
 # ****************************************** Windows App ******************************************
 # *************************************************************************************************
 
-def registrationWindow():
-    
+def registrationWindow():    
     global registration_window
     registration_window = Toplevel()
     registration_window.title("Inscripción")
@@ -34,7 +34,16 @@ def registrationWindow():
     entry_user_pass = Entry(registration_window, textvariable = user_pass_entry)
     entry_user_pass.pack()
     Label(registration_window, text="").pack()
-    Button(registration_window, text="Registrarse", command= lambda: validateRegistrer(entry_user_email.get(), entry_user_pass.get())).pack()
+    Button(registration_window, text="Registrarse", command= lambda: starRegister(entry_user_email.get(), entry_user_pass.get())).pack()
+
+    def starRegister(email, password):
+        global user_mail_global
+        isRegisterProcessValid = hv.validateRegister(email, password)
+        if(isRegisterProcessValid['response']):
+            user_mail_global = email
+            dataPersonWindow()
+        else:
+            wb.alertWindow("Error!", isRegisterProcessValid['message'])
 
 def dataPersonWindow():
     global data_person_window
@@ -80,7 +89,16 @@ def dataPersonWindow():
     entry_user_gender = Entry(data_person_window, textvariable = user_gender_entry)
     entry_user_gender.pack()
     Label(data_person_window, text="").pack()
-    Button(data_person_window, text="Registrarse", command= lambda: validateDataPerson(entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get())).pack()
+    Button(data_person_window, text="Registrarse", command= lambda: setDataPerson(entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get())).pack()
+
+    def setDataPerson(name, lastName, gender, age):
+        global user_gender_global
+        isPersonDataValid = hv.validateDataPerson(name, lastName, gender, age)
+        if(isPersonDataValid['response']):
+            user_gender_global = gender
+            imcDataWindow()
+        else:
+            wb.alertWindow("Error!", isPersonDataValid['message'])
 
 def imcDataWindow():    
     global imc_data_window
@@ -97,9 +115,9 @@ def imcDataWindow():
     imc_weight_entry = StringVar()
     user_height_entry = StringVar()
     
-
     Label(imc_data_window, text="Datos Cálculo IMC").pack()
     Label(imc_data_window, text="").pack()
+
     Label(imc_data_window, text="Género: " + user_gender_global.upper()).pack()
     Label(imc_data_window, text="").pack()
 
@@ -127,115 +145,38 @@ def imcDataWindow():
     entry_user_height.pack()
     Label(imc_data_window, text="").pack()
 
-    Button(imc_data_window, text="Calcular IMC", command= lambda: validateDataImc(entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), user_gender_global.upper())).pack()
+    Button(imc_data_window, text="Calcular IMC", command= lambda: startImcCalculator(entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), user_gender_global.upper())).pack()
 
-# *************************************************************************************************
-# ************************************ Windows App Validations ************************************
-# *************************************************************************************************
-
-def validateRegistrer(email, password):
-    global user_mail_global
-
-    if(not email and not password):
-        alertWindow("Error!", "Campos vacíos")
-        return
-    if(not hf.validEmailFormat(email) and not hf.validPassFormat(password)):
-        alertWindow("Error!", "Usuario y correo no válidos")
-        return
-    if(not hf.validEmailFormat(email)):
-        alertWindow("Error!", "Correo no válido")
-        return
-    if(not hf.validPassFormat(password)):
-        alertWindow("Error!", "Password no válida! \n intente digitar:\n al menos una letra en mayúscula, , \n al menos una letra en minúscula,\n al menos un carácter especial,\n y al menos un número")
-        return
-    
-    user_mail_global = email
-    dataPersonWindow()
-
-def validateDataPerson(name, lastName, gender, age):
-    global user_gender_global
-
-    if(not name or not lastName or not gender or not age):
-        alertWindow("Error!", "Campos vácios")
-        return
-    if not hf.onlyLetters(name):
-        alertWindow("Error!", "Nombre no válido")
-        return
-    if not hf.onlyLetters(lastName):
-        alertWindow("Error!", "Apellidos no válidos!")
-        return
-    if not hf.validAge(age):
-        alertWindow("Error!", "Edad no válida!")
-        return
-    if not hf.validGender(gender):
-        alertWindow("Error!", "Género no válido!")
-        return
-    
-    user_gender_global = gender
-    imcDataWindow()
-
-def validateDataImc(date, time, weight, height, gender):
-    if(not date or not time or not weight or not height):
-        alertWindow("Error!", "Campos vácios")
-        return
-    if not hf.validDateFormat(date):
-        alertWindow("Error!", "Fecha no válida")
-        return
-    if not hf.validTimeFormat(time):
-        alertWindow("Error!", "Hora no válida!")
-        return
-    if not hf.onlyIntNumbers(weight):
-        alertWindow("Error!", "Peso no válido")
-        return
-    if not hf.validHeight(height):
-        alertWindow("Error!", "Altura no válida!")
-        return
-    
-    imc_user = float(himc.calculateImc(weight, height))
-    gender_user = gender.upper()
-
-    if gender_user == "M":
-        message = himc.evaluateManImc(imc_user)
-    
-    if gender_user =="F":
-        message = himc.evaluateWomanImc(imc_user)
-
-    alertWindow("IMC Calculado", "Su IMC es: " + str(imc_user) + " y el resultado es: " + message)
-
-# *************************************************************************************************
-# ************************************ Windows App Behaviors************************************
-# *************************************************************************************************
-
-def alertWindow(title, message):
-    global success_window
-    success_window = Toplevel(registration_window)
-    success_window.title(title)
-    success_window.geometry('350x200')
-    
-    Label(success_window, text="").pack()
-    Label(success_window, text=message).pack()
-    Label(success_window, text="").pack()
-    Button(success_window, text="Aceptar", command= lambda: deleteWindow(success_window)).pack()
-
-def deleteWindow(window):
-    window.destroy()
+    def startImcCalculator(date, time, weight, height, gender):
+        isImcDataValid = hv.validateDataImc(date, time, weight, height)
+        if(isImcDataValid['response']):
+            userImcResult = float(himc.calculateImc(weight, height))
+            userGender = gender.upper()
+            if userGender == "M":
+                message = himc.evaluateManImc(userImcResult)        
+            if userGender =="F":
+                message = himc.evaluateWomanImc(userImcResult)
+            wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
+        else:
+            wb.alertWindow("Error!", isImcDataValid['message'])
 
 # *************************************************************************************************
 # ************************************ Main App ************************************
 # *************************************************************************************************
 
-def main():
+def mainWindow():
     global principal_window
     principal_window = Tk()
     principal_window.title("Calculadora IMC")
     principal_window.geometry('800x600')
     principal_window.resizable(0,0)
 
-    Label(text="Escoja opción").pack()
+    Label(text="CALCULA TU ÍNDICE DE MASA CORPORAL").pack()
     Label(text="").pack()
-    Button(text="Incripción", command=registrationWindow).pack()
+    Button(text="Registrate", command=registrationWindow).pack()
+    Label(text="").pack()
+    Button(text="Inicia Sesión", command=registrationWindow).pack()
 
     principal_window.mainloop()
 
-
-main()
+mainWindow()

@@ -20,7 +20,7 @@ def validHeight(height):
     regexPattern = re.compile("^\d+\.\d{2,2}$")
     return bool(regexPattern.match(str(height)))
 
-def onlyLetters(val):
+def onlyString(val):
     regexPattern = re.compile("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$")
     return bool(regexPattern.match(val))
 

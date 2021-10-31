@@ -3,3 +3,9 @@
 /.vs
 /Helpers/__pycache__/ 
 /Handlers/__pycache__/
+/Behaviors/__pycache__/
+
+#files
+.txt
+grabar.py
+leer.py
