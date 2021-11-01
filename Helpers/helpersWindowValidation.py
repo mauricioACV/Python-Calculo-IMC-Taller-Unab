@@ -1,6 +1,6 @@
 from Helpers import helpersFunctions as hf
 
-def validateRegister(email, password):
+def validateFormatCredentials(email, password):
     if(not email and not password):
         return {'response':False, 'message':'Campos vacíos'}
     if(not hf.validEmailFormat(email) and not hf.validPassFormat(password)):

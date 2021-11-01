@@ -1,10 +1,8 @@
 from tkinter import *
 from Helpers import helpersWindowValidation as hv
 from Handlers import handlerImc as himc
+from Handlers import handlerPersistDataUser as db
 from Behaviors import windowBehavior as wb
-
-user_mail_global=""
-user_gender_global=""
 
 # *************************************************************************************************
 # ****************************************** Windows App ******************************************
@@ -37,15 +35,62 @@ def registrationWindow():
     Button(registration_window, text="Registrarse", command= lambda: starRegister(entry_user_email.get(), entry_user_pass.get())).pack()
 
     def starRegister(email, password):
-        global user_mail_global
-        isRegisterProcessValid = hv.validateRegister(email, password)
-        if(isRegisterProcessValid['response']):
-            user_mail_global = email
-            dataPersonWindow()
+        isValidCredentialFormat = hv.validateFormatCredentials(email, password)
+        if(isValidCredentialFormat['response']):
+            if(db.isRegisteredUser(email)):
+                wb.alertWindow("Error!", "Error Usuario Existente, intente con otro correo electrónico")
+            else:            
+                db.saveUserCredentials(email, password)
+                dataPersonWindow(email)
+                wb.deleteWindow(registration_window)
         else:
-            wb.alertWindow("Error!", isRegisterProcessValid['message'])
+            wb.alertWindow("Error!", isValidCredentialFormat['message'])
 
-def dataPersonWindow():
+def loginWindow():    
+    global login_window
+    login_window = Toplevel()
+    login_window.title("Iniciar Sesión")
+    login_window.geometry('800x600')
+
+    global user_email_entry
+    global user_pass_entry
+    user_mail_entry = StringVar()
+    user_pass_entry = StringVar()
+
+    Label(login_window, text="Iniciar Sesión").pack()
+    Label(login_window, text="").pack()
+
+    label_user_email = Label(login_window, text="Ingrese Email")
+    label_user_email.pack()
+    entry_user_email = Entry(login_window, textvariable = user_mail_entry)
+    entry_user_email.pack()
+    Label(login_window, text="").pack()
+    label_user_pass = Label(login_window, text="Ingrese Password")
+    label_user_pass.pack()
+    entry_user_pass = Entry(login_window, textvariable = user_pass_entry)
+    entry_user_pass.pack()
+    Label(login_window, text="").pack()
+    Button(login_window, text="Iniciar Sesión", command= lambda: starLogin(entry_user_email.get(), entry_user_pass.get())).pack()
+
+    def starLogin(userEmail, password):
+        isValidCredentialFormat = hv.validateFormatCredentials(userEmail, password)
+        if(isValidCredentialFormat['response']):
+            if(db.isRegisteredUser(userEmail)):
+                dbUserPass = db.getUserPassword(userEmail)
+                dbUserGender = db.getUserGender(userEmail)
+                print(dbUserGender)
+                if dbUserPass == password:
+                    imcDataWindow(userEmail, dbUserGender)
+                    wb.deleteWindow(login_window)
+                else:
+                    wb.alertWindow("Error!", "Error, Contraseña Incorrecta")
+            else:
+                wb.alertWindow("Error!", "Error, Usuario no existe")
+                
+        else:
+            wb.alertWindow("Error!", isValidCredentialFormat['message'])
+
+def dataPersonWindow(email):
     global data_person_window
     data_person_window = Toplevel()
     data_person_window.title("Datos Persona")
@@ -60,10 +105,10 @@ def dataPersonWindow():
     user_age_entry = StringVar()
     user_gender_entry = StringVar()
 
-    Label(registration_window, text="Datos Persona").pack()
-    Label(registration_window, text="").pack()
+    Label(data_person_window, text="Datos Persona").pack()
+    Label(data_person_window, text="").pack()
 
-    label_user_welcome = Label(data_person_window, text="Hola: " + user_mail_global.upper())
+    label_user_welcome = Label(data_person_window, text="Cuenta de usuario: " + email.upper())
     label_user_welcome.pack()
     label_user_message = Label(data_person_window, text="Su inscripción fue exitosa! \n Por favor Ingrese los siguientes datos:")
     label_user_message.pack()
@@ -89,18 +134,19 @@ def dataPersonWindow():
     entry_user_gender = Entry(data_person_window, textvariable = user_gender_entry)
     entry_user_gender.pack()
     Label(data_person_window, text="").pack()
-    Button(data_person_window, text="Registrarse", command= lambda: setDataPerson(entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get())).pack()
+    Button(data_person_window, text="Registrarse", command= lambda: saveDataPerson(email, entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get())).pack()
 
-    def setDataPerson(name, lastName, gender, age):
+    def saveDataPerson(mail, name, lastName, gender, age):
         global user_gender_global
         isPersonDataValid = hv.validateDataPerson(name, lastName, gender, age)
         if(isPersonDataValid['response']):
             user_gender_global = gender
-            imcDataWindow()
+            db.saveDataUser(mail, name, lastName, age, gender)
+            wb.successWindow("Éxito", "Datos de usuario registados correctamente", data_person_window)
         else:
             wb.alertWindow("Error!", isPersonDataValid['message'])
 
-def imcDataWindow():    
+def imcDataWindow(userEmail, gender):    
     global imc_data_window
     imc_data_window = Toplevel()
     imc_data_window.title("Datos para calcular IMC")
@@ -118,7 +164,7 @@ def imcDataWindow():
     Label(imc_data_window, text="Datos Cálculo IMC").pack()
     Label(imc_data_window, text="").pack()
 
-    Label(imc_data_window, text="Género: " + user_gender_global.upper()).pack()
+    Label(imc_data_window, text="Género: " + gender.upper()).pack()
     Label(imc_data_window, text="").pack()
 
     label_user_date = Label(imc_data_window, text="Ingrese Fecha Resgistro peso")
@@ -145,18 +191,20 @@ def imcDataWindow():
     entry_user_height.pack()
     Label(imc_data_window, text="").pack()
 
-    Button(imc_data_window, text="Calcular IMC", command= lambda: startImcCalculator(entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), user_gender_global.upper())).pack()
+    Button(imc_data_window, text="Calcular IMC", command= lambda: startImcCalculator(userEmail , entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), gender)).pack()
 
-    def startImcCalculator(date, time, weight, height, gender):
+    def startImcCalculator(mail, date, time, weight, height, gender):
         isImcDataValid = hv.validateDataImc(date, time, weight, height)
         if(isImcDataValid['response']):
             userImcResult = float(himc.calculateImc(weight, height))
             userGender = gender.upper()
+            db.saveImcDataUser(mail, date, time, weight, height, userImcResult)        
             if userGender == "M":
-                message = himc.evaluateManImc(userImcResult)        
+                message = himc.evaluateManImc(userImcResult)
+                wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
             if userGender =="F":
                 message = himc.evaluateWomanImc(userImcResult)
-            wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
+                wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
         else:
             wb.alertWindow("Error!", isImcDataValid['message'])
 
@@ -173,9 +221,9 @@ def mainWindow():
 
     Label(text="CALCULA TU ÍNDICE DE MASA CORPORAL").pack()
     Label(text="").pack()
-    Button(text="Registrate", command=registrationWindow).pack()
+    Button(text="Registrate antes de utilizar la app", command=registrationWindow).pack()
     Label(text="").pack()
-    Button(text="Inicia Sesión", command=registrationWindow).pack()
+    Button(text="Inicia Sesión si ya eres usuario registrado", command=loginWindow).pack()
 
     principal_window.mainloop()
 
