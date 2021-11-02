@@ -41,3 +41,9 @@ def validGender(gender):
         return True
     else:
         return False
+
+def getTime():
+    import time
+    hora = time.ctime()
+    hora_hh_mm = hora.split()
+    return hora_hh_mm[3][:-3]

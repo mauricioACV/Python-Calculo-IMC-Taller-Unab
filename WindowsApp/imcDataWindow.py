@@ -1,9 +1,10 @@
 from tkinter import *
 from WindowsApp import ImcReportWindow as irw
 from Handlers import handlerUserDataPersistence as db
-from Helpers import helpersWindowValidation as hv
-from Behaviors import windowBehavior as wb
 from Handlers import handlerImc as himc
+from Helpers import helpersWindowValidation as hv
+from Helpers import helpersFunctions as hf
+from Behaviors import windowBehavior as wb
 
 def imcDataWindow(userEmail, gender):    
     global imc_data_window
@@ -21,7 +22,7 @@ def imcDataWindow(userEmail, gender):
     user_height_entry = StringVar()
 
     Label(imc_data_window, text="").pack()
-    Label(imc_data_window, text="Datos Cálculo IMC", height=2, width=60, font=('Comic sens MC',14,'bold'), activebackground="aqua", bg='#1AACC1').pack()
+    Label(imc_data_window, text="Datos Cálculo IMC: " + userEmail, height=2, width=60, font=('Comic sens MC',14,'bold'), activebackground="aqua", bg='#1AACC1').pack()
     Label(imc_data_window, text="").pack()
 
     Label(imc_data_window, text="Género: " + gender.upper(), height=2, width=50, font=('Comic sens MC',11,'bold'), activebackground="aqua", bg='#B5ACD8').pack()
@@ -36,6 +37,7 @@ def imcDataWindow(userEmail, gender):
     label_user_time = Label(imc_data_window, text="Ingrese Hora registro peso", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_time.pack()
     entry_user_time = Entry(imc_data_window, textvariable = imc_time_entry)
+    entry_user_time.insert(0, hf.getTime())
     entry_user_time.pack()
     Label(imc_data_window, text="").pack()
 
@@ -51,9 +53,9 @@ def imcDataWindow(userEmail, gender):
     entry_user_height.pack()
     Label(imc_data_window, text="").pack()
 
-    Button(imc_data_window, text="Calcular IMC", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center", command= lambda: startImcCalculator(userEmail , entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), gender)).pack()
+    Button(imc_data_window, text="Calcular IMC", command= lambda: startImcCalculator(userEmail , entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), gender), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
     Label(imc_data_window, text="").pack()
-    Button(imc_data_window, text="Cancelar y Salir", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center", command = lambda: wb.deleteWindow(imc_data_window)).pack()
+    Button(imc_data_window, text="Cancelar y Salir", command = lambda: wb.deleteWindow(imc_data_window), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
 
     def startImcCalculator(mail, date, time, weight, height, gender):
         isImcDataValid = hv.validateDataImc(date, time, weight, height)
@@ -61,6 +63,7 @@ def imcDataWindow(userEmail, gender):
             userImcResult = float(himc.calculateImc(weight, height))
             userGender = gender.upper()
             db.saveImcDataUser(mail, date, time, weight, height, userImcResult)        
-            irw.imcReportWindow(mail, userGender, imc_data_window)
+            irw.imcReportWindow(mail, userGender)
+            wb.deleteWindow(imc_data_window)
         else:
             wb.alertWindow("Error!", isImcDataValid['message'])

@@ -51,8 +51,9 @@ def dataPersonWindow(email):
     Label(data_person_window, text="").pack()
     entry_user_gender = Entry(data_person_window, textvariable = user_gender_entry)
     entry_user_gender.pack()
+
     Label(data_person_window, text="").pack()
-    Button(data_person_window, text="Registrarse", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center", command= lambda: saveDataPerson(email, entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get())).pack()
+    Button(data_person_window, text="Registrarse", command= lambda: saveDataPerson(email, entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get()), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
 
     def saveDataPerson(mail, name, lastName, gender, age):
         global user_gender_global

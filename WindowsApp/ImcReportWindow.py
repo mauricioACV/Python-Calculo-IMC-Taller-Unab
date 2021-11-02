@@ -1,9 +1,9 @@
 from tkinter import *
 from Handlers import handlerUserDataPersistence as db
-from Behaviors import windowBehavior as wb
 from Handlers import handlerImc as himc
+from Behaviors import windowBehavior as wb
 
-def imcReportWindow(userEmail, userGender, askingWindow):
+def imcReportWindow(userEmail, userGender):
     global imc_report_window
     imc_report_window = Toplevel()
     imc_report_window.title("Historial IMC")
@@ -29,8 +29,7 @@ def imcReportWindow(userEmail, userGender, askingWindow):
         label_no_result.pack()
     
     Label(imc_report_window, text="").pack()
-    Button(imc_report_window, text="Salir", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center", command= lambda: exitImcWindow()).pack()
+    Button(imc_report_window, text="Salir", command= lambda: exitImcWindow(), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
 
     def exitImcWindow():
         wb.deleteWindow(imc_report_window)
-        wb.deleteWindow(askingWindow)

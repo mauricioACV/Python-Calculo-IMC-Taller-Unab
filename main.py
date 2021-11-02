@@ -19,9 +19,10 @@ def mainWindow():
     Label(text="").pack()
     Button(text="Registrate antes de utilizar la app", borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center", command = rw.registerWindow).pack()
     Label(text="").pack()
-    Button(text="Inicia Sesión si ya eres usuario registrado", borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center", command = lw.loginWindow).pack()
+    
+    Button(text="Inicia Sesión si ya eres usuario registrado", command = lw.loginWindow, borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center").pack()
     Label(text="").pack()
-    Button(text="Salir de la App", borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center", command = lambda: wb.deleteWindow(principal_window)).pack()
+    Button(text="Salir de la App", command = lambda: wb.deleteWindow(principal_window), borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
 
     principal_window.mainloop()
 

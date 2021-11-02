@@ -30,11 +30,12 @@ def registerWindow():
     Label(register_window, text="").pack()
     entry_user_pass = Entry(register_window, textvariable = user_pass_entry)
     entry_user_pass.pack()
-    Label(register_window, text="").pack()
-    Button(register_window, text="Registrarse", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center", command= lambda: starRegister(entry_user_email.get(), entry_user_pass.get())).pack()
     
     Label(register_window, text="").pack()
-    Button(register_window, text="Cancelar y Salir", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center", command = lambda: wb.deleteWindow(register_window)).pack()
+    Button(register_window, text="Registrarse", command= lambda: starRegister(entry_user_email.get(), entry_user_pass.get()), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
+    
+    Label(register_window, text="").pack()
+    Button(register_window, text="Cancelar y Salir", command = lambda: wb.deleteWindow(register_window), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
 
 
     def starRegister(email, password):

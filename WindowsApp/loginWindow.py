@@ -31,9 +31,10 @@ def loginWindow():
     entry_user_pass = Entry(login_window, textvariable = user_pass_entry)
     entry_user_pass.pack()
     Label(login_window, text="").pack()
-    Button(login_window, text="Iniciar Sesión", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center",command= lambda: starLogin(entry_user_email.get(), entry_user_pass.get())).pack()
+
+    Button(login_window, text="Iniciar Sesión",command= lambda: starLogin(entry_user_email.get(), entry_user_pass.get()), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
     Label(login_window, text="").pack()
-    Button(login_window, text="Cancelar y Salir", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center", command = lambda: wb.deleteWindow(login_window)).pack()
+    Button(login_window, text="Cancelar y Salir", command = lambda: wb.deleteWindow(login_window), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
 
     def starLogin(userEmail, password):
         isValidCredentialFormat = hv.validateFormatCredentials(userEmail, password)
