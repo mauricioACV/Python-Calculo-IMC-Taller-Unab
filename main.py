@@ -78,7 +78,6 @@ def loginWindow():
             if(db.isRegisteredUser(userEmail)):
                 dbUserPass = db.getUserPassword(userEmail)
                 dbUserGender = db.getUserGender(userEmail)
-                print(dbUserGender)
                 if dbUserPass == password:
                     imcDataWindow(userEmail, dbUserGender)
                     wb.deleteWindow(login_window)
@@ -110,7 +109,7 @@ def dataPersonWindow(email):
 
     label_user_welcome = Label(data_person_window, text="Cuenta de usuario: " + email.upper())
     label_user_welcome.pack()
-    label_user_message = Label(data_person_window, text="Su inscripción fue exitosa! \n Por favor Ingrese los siguientes datos:")
+    label_user_message = Label(data_person_window, text="Su cuenta de usuario se creó correctamente \n Por favor Ingrese los siguientes datos:")
     label_user_message.pack()
     Label(data_person_window, text="").pack()
 
@@ -201,13 +200,37 @@ def imcDataWindow(userEmail, gender):
             db.saveImcDataUser(mail, date, time, weight, height, userImcResult)        
             if userGender == "M":
                 message = himc.evaluateManImc(userImcResult)
-                wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
+                imcReportWindow(mail, str(userImcResult), message)
+                # wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
             if userGender =="F":
                 message = himc.evaluateWomanImc(userImcResult)
-                wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
+                imcReportWindow(mail, str(userImcResult), message)
+                # wb.alertWindow("IMC Calculado", "Su IMC es: " + str(userImcResult) + " y el resultado es: " + message)
         else:
             wb.alertWindow("Error!", isImcDataValid['message'])
 
+def imcReportWindow(userEmail, imcResult, imcMessage):
+    global imc_report_window
+    imc_report_window = Toplevel()
+    imc_report_window.title("Historial IMC")
+    imc_report_window.geometry('800x600')
+    print(userEmail)
+    print(imcResult)
+    print(imcMessage)
+    imcList = db.getImcUserHistory(userEmail)
+    for imcHistory in imcList:
+        Label(imc_report_window, text="Fecha Registro: " + imcHistory['date']).pack()
+        # Label(imc_report_window, text="Hora Registro: " + imcHistory['time']).pack()
+        # Label(imc_report_window, text="Peso: " + imcHistory['weight']).pack()
+        # Label(imc_report_window, text="Altura: " + imcHistory['height']).pack()
+        Label(imc_report_window, text="IMC: " + imcHistory['imc']).pack()
+        Label(imc_report_window, text="").pack()
+    Button(imc_report_window, text="Salir", command= lambda: exitImcWindow()).pack()
+
+    def exitImcWindow():
+        wb.deleteWindow(imc_report_window)
+        wb.deleteWindow(imc_data_window)
+    
 # *************************************************************************************************
 # ************************************ Main App ************************************
 # *************************************************************************************************
