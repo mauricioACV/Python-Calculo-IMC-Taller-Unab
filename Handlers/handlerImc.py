@@ -1,6 +1,13 @@
 def calculateImc(weight, height):
     return round(int(weight) / pow(float(height), 2), 1)
 
+def getImcDiagnosticByGender(imc, gender):
+    if gender == "M":
+        message = evaluateManImc(imc)
+    if gender =="F":
+        message = evaluateWomanImc(imc)
+    return message
+
 def evaluateManImc(imc):
     imcVal = float(imc)
     if imcVal < 20:

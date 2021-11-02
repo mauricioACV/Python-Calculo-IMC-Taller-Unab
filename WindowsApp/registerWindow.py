@@ -1,0 +1,50 @@
+from tkinter import *
+from WindowsApp import dataPersonWindow as dpw
+from Handlers import handlerUserDataPersistence as db
+from Helpers import helpersWindowValidation as hv
+from Behaviors import windowBehavior as wb
+
+def registerWindow():    
+    global register_window
+    register_window = Toplevel()
+    register_window.title("Inscripción")
+    register_window.geometry('800x600')
+
+    global user_email_entry
+    global user_pass_entry
+    user_mail_entry = StringVar()
+    user_pass_entry = StringVar()
+
+    Label(register_window, text="").pack()
+    Label(register_window, text="Formulario Inscripción", height=2, width=60, font=('Comic sens MC',14,'bold'), activebackground="aqua", bg='#1AACC1').pack()
+    Label(register_window, text="").pack()
+
+    label_user_email = Label(register_window, text="Ingrese Email", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_email.pack()
+    Label(register_window, text="").pack()
+    entry_user_email = Entry(register_window, textvariable = user_mail_entry)
+    entry_user_email.pack()
+    Label(register_window, text="").pack()
+    label_user_pass = Label(register_window, text="Ingrese Password", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_pass.pack()
+    Label(register_window, text="").pack()
+    entry_user_pass = Entry(register_window, textvariable = user_pass_entry)
+    entry_user_pass.pack()
+    Label(register_window, text="").pack()
+    Button(register_window, text="Registrarse", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center", command= lambda: starRegister(entry_user_email.get(), entry_user_pass.get())).pack()
+    
+    Label(register_window, text="").pack()
+    Button(register_window, text="Cancelar y Salir", borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center", command = lambda: wb.deleteWindow(register_window)).pack()
+
+
+    def starRegister(email, password):
+        isValidCredentialFormat = hv.validateFormatCredentials(email, password)
+        if(isValidCredentialFormat['response']):
+            if(db.isRegisteredUser(email)):
+                wb.alertWindow("Error!", "Error Usuario Existente, intente con otro correo electrónico")
+            else:            
+                db.saveUserCredentials(email, password)
+                dpw.dataPersonWindow(email)
+                wb.deleteWindow(register_window)
+        else:
+            wb.alertWindow("Error!", isValidCredentialFormat['message'])
