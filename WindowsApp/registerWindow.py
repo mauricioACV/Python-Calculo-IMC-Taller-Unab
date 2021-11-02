@@ -7,6 +7,7 @@ from Behaviors import windowBehavior as wb
 def registerWindow():    
     global register_window
     register_window = Toplevel()
+    register_window.overrideredirect(True)
     register_window.title("Inscripción")
     register_window.geometry('800x600')
 

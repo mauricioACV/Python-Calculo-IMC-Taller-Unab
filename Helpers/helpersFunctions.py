@@ -25,7 +25,7 @@ def onlyString(val):
     return bool(regexPattern.match(val))
 
 def validDateFormat(date):
-    regexPattern = re.compile("^(?:(?:(?:0?[1-9]|1\d|2[0-8])[/](?:0?[1-9]|1[0-2])|(?:29|30)[/](?:0?[13-9]|1[0-2])|31[/](?:0?[13578]|1[02]))[/](?:0{2,3}[1-9]|0{1,2}[1-9]\d|0?[1-9]\d{2}|[1-9]\d{3})|29[/]0?2[/](?:\d{1,2}(?:0[48]|[2468][048]|[13579][26])|(?:0?[48]|[13579][26]|[2468][048])00))$")
+    regexPattern = re.compile("^(?:(?:(?:0?[1-9]|1\d|2[0-8])[-](?:0?[1-9]|1[0-2])|(?:29|30)[-](?:0?[13-9]|1[0-2])|31[-](?:0?[13578]|1[02]))[-](?:0{2,3}[1-9]|0{1,2}[1-9]\d|0?[1-9]\d{2}|[1-9]\d{3})|29[-]0?2[-](?:\d{1,2}(?:0[48]|[2468][048]|[13579][26])|(?:0?[48]|[13579][26]|[2468][048])00))$")
     return bool(regexPattern.match(date))
 
 def validTimeFormat(time):
@@ -47,3 +47,9 @@ def getTime():
     hora = time.ctime()
     hora_hh_mm = hora.split()
     return hora_hh_mm[3][:-3]
+
+def getDate():
+    from datetime import date
+    getDate = date.today()
+    dateFormat_d_m_y = getDate.strftime("%d-%m-%Y")
+    return dateFormat_d_m_y

@@ -7,6 +7,7 @@ from Behaviors import windowBehavior as wb
 def loginWindow():    
     global login_window
     login_window = Toplevel()
+    login_window.overrideredirect(True)
     login_window.title("Inicio de Sesión")
     login_window.geometry('800x600')
 

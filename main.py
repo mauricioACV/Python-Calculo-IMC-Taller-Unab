@@ -9,6 +9,7 @@ from Behaviors import windowBehavior as wb
 def mainWindow():
     global principal_window
     principal_window = Tk()
+    principal_window.overrideredirect(True)
     principal_window.title("Calculadora IMC")
     principal_window.geometry('800x600')
     principal_window.resizable(0,0)

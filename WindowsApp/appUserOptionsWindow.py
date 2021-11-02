@@ -6,6 +6,7 @@ from Behaviors import windowBehavior as wb
 def appUserOptionsWindow(userEmail, userGender):    
     global app_user_options_window
     app_user_options_window = Toplevel()
+    app_user_options_window.overrideredirect(True)
     app_user_options_window.title("Menú Aplicación IMC")
     app_user_options_window.geometry('800x600')
 
@@ -15,7 +16,7 @@ def appUserOptionsWindow(userEmail, userGender):
     Button(app_user_options_window, text="Calcular y Registrar IMC", command= lambda: idw.imcDataWindow(userEmail, userGender), borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center").pack()
     Label(app_user_options_window, text="").pack()
 
-    Button(app_user_options_window, text="Ver Historial IMC", command= lambda: irw.imcReportWindow(userEmail, userGender, ""), borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center").pack()
+    Button(app_user_options_window, text="Ver Historial IMC", command= lambda: irw.imcReportWindow(userEmail, userGender), borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center").pack()
     Label(app_user_options_window, text="").pack()
 
     Button(app_user_options_window, text="Cancelar y Salir", command= lambda: wb.deleteWindow(app_user_options_window), borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()

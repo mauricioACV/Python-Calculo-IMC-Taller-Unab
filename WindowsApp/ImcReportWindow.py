@@ -6,6 +6,7 @@ from Behaviors import windowBehavior as wb
 def imcReportWindow(userEmail, userGender):
     global imc_report_window
     imc_report_window = Toplevel()
+    imc_report_window.overrideredirect(True)
     imc_report_window.title("Historial IMC")
     imc_report_window.geometry('800x600')
     imcList = db.getImcUserHistory(userEmail)

@@ -9,6 +9,7 @@ from Behaviors import windowBehavior as wb
 def imcDataWindow(userEmail, gender):    
     global imc_data_window
     imc_data_window = Toplevel()
+    imc_data_window.overrideredirect(True)
     imc_data_window.title("Datos para calcular IMC")
     imc_data_window.geometry('800x600')
 
@@ -31,6 +32,7 @@ def imcDataWindow(userEmail, gender):
     label_user_date = Label(imc_data_window, text="Ingrese Fecha Registro peso", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_date.pack()
     entry_user_date = Entry(imc_data_window, textvariable = imc_date_entry)
+    entry_user_date.insert(0, hf.getDate())
     entry_user_date.pack()
     Label(imc_data_window, text="").pack()
 
