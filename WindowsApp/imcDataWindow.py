@@ -60,7 +60,7 @@ def imcDataWindow(userEmail, gender):
     Button(imc_data_window, text="Cancelar y Salir", command = lambda: wb.deleteWindow(imc_data_window), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
 
     def startImcCalculator(mail, date, time, weight, height, gender):
-        isImcDataValid = hv.validateDataImc(date, time, weight, height)
+        isImcDataValid = hv.validateImcData(date, time, weight, height)
         if(isImcDataValid['response']):
             userImcResult = float(himc.calculateImc(weight, height))
             userGender = gender.upper()

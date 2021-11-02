@@ -27,5 +27,5 @@ def successWindow(title, message, backWindow):
     Button(success_window, text="Aceptar", command= lambda: closeSuccessWindow(success_window, backWindow)).pack()
 
 def closeSuccessWindow(thisWindow, backWindow):
-    thisWindow.destroy()
-    backWindow.destroy()
+    deleteWindow(thisWindow)
+    deleteWindow(backWindow)
