@@ -19,9 +19,7 @@ def imcReportWindow(userEmail, userGender):
         for imcHistory in imcList:
             diagnostic = himc.getImcDiagnosticByGender(imcHistory['imc'], userGender)
             Label(imc_report_window, text="Fecha Registro: " + imcHistory['date']).pack()
-            # Label(imc_report_window, text="Hora Registro: " + imcHistory['time']).pack()
-            # Label(imc_report_window, text="Peso: " + imcHistory['weight']).pack()
-            # Label(imc_report_window, text="Altura: " + imcHistory['height']).pack()
+            Label(imc_report_window, text="Hora Registro: " + imcHistory['time'] + " ->> Peso: " + imcHistory['weight'] + " ->> Altura: " + imcHistory['height']).pack()
             Label(imc_report_window, text="IMC: " + imcHistory['imc']).pack()
             Label(imc_report_window, text="Diagnóstico: " + diagnostic).pack()
             Label(imc_report_window, text="").pack()
