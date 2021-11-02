@@ -24,7 +24,7 @@ def validateDataPerson(name, lastName, gender, age):
         return {'response':False, 'message':'Género no válido'}
     return {'response':True}
 
-def validateDataImc(date, time, weight, height):
+def validateImcData(date, time, weight, height):
     if(not date or not time or not weight or not height):
         return {'response':False, 'message':'Campos vácios'}
     if not hf.validDateFormat(date):

@@ -4,10 +4,3 @@
 /Helpers/__pycache__/ 
 /Handlers/__pycache__/
 /Behaviors/__pycache__/
-/Data
-
-#files
-.txt
-grabar.py
-leer.py
-jsonString.py

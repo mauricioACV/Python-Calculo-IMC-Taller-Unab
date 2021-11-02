@@ -11,10 +11,12 @@ def saveUserCredentials(userName, userPass):
 
 def saveDataUser(userMail, userName, userLastName, userAge, userGender):
     file = open("Data/"+ userMail.lower() +"_data_user", "a")
+    file2 = open("Data/"+ userMail.lower() +"_imc_history", "a")
     dataUser = {'userMail':userMail.upper(), 'name':userName.upper(), 'lastName':userLastName.upper(), 'age':userAge, 'gender':userGender.upper()}
     jsonDataUser = json.dumps(dataUser)
     file.write(jsonDataUser + "\n")
     file.close()
+    file2.close()
 
 def saveImcDataUser(userMail, date, time, weight, height, imc):
     file = open("Data/"+ userMail.lower() +"_imc_history", "a")
