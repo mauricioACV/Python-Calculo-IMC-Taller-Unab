@@ -1,5 +1,8 @@
 from tkinter import *
 
+def deleteWindow(window):
+    window.destroy()
+
 def alertWindow(title, message):
     global alert_window
     alert_window = Toplevel()
@@ -10,10 +13,6 @@ def alertWindow(title, message):
     Label(alert_window, text=message).pack()
     Label(alert_window, text="").pack()
     Button(alert_window, text="Aceptar", command= lambda: deleteWindow(alert_window)).pack()
-
-def deleteWindow(window):
-    window.destroy()
-
 
 def successWindow(title, message, backWindow):
     global success_window

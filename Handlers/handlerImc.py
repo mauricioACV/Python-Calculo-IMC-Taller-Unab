@@ -3,12 +3,12 @@ def calculateImc(weight, height):
 
 def getImcDiagnosticByGender(imc, gender):
     if gender == "M":
-        message = evaluateMaleImc(imc)
+        message = getMaleImcEvaluation(imc)
     if gender =="F":
-        message = evaluateFemaleImc(imc)
+        message = getFemaleImcEvaluation(imc)
     return message
 
-def evaluateMaleImc(imc):
+def getMaleImcEvaluation(imc):
     imcVal = float(imc)
     if imcVal < 20:
         return "Bajo Peso"
@@ -21,7 +21,7 @@ def evaluateMaleImc(imc):
     if imcVal > 40:
         return "Obesidad muy severa"
 
-def evaluateFemaleImc(imc):
+def getFemaleImcEvaluation(imc):
     imcVal = float(imc)
     if imcVal < 20:
         return "Bajo Peso"
