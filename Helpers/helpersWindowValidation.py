@@ -3,8 +3,6 @@ from Helpers import helpersFunctions as hf
 def validateFormatCredentials(email, password):
     if(not email and not password):
         return {'response':False, 'message':'Campos vacíos'}
-    if(not hf.validEmailFormat(email) and not hf.validPassFormat(password)):
-        return {'response':False, 'message':'Usuario y correo no válidos'}
     if(not hf.validEmailFormat(email)):
         return {'response':False, 'message':'Correo no válido'}
     if(not hf.validPassFormat(password)):

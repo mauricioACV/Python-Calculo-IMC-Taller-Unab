@@ -42,14 +42,13 @@ def loginWindow():
         if(isValidCredentialFormat['response']):
             if(db.isRegisteredUser(userEmail)):
                 dbUserPass = db.getUserPassword(userEmail)
-                dbUserGender = db.getUserGender(userEmail)
                 if dbUserPass == password:
+                    dbUserGender = db.getUserGender(userEmail)
                     uow.appUserOptionsWindow(userEmail, dbUserGender)
                     wb.deleteWindow(login_window)
                 else:
                     wb.alertWindow("Error!", "Error, Contraseña Incorrecta")
             else:
-                wb.alertWindow("Error!", "Error, Usuario no existe")
-                
+                wb.alertWindow("Error!", "Error, Usuario no registrado")                
         else:
             wb.alertWindow("Error!", isValidCredentialFormat['message'])

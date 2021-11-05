@@ -29,21 +29,21 @@ def imcDataWindow(userEmail, gender):
     Label(imc_data_window, text="Género: " + gender.upper(), height=2, width=50, font=('Comic sens MC',11,'bold'), activebackground="aqua", bg='#B5ACD8').pack()
     Label(imc_data_window, text="").pack()
 
-    label_user_date = Label(imc_data_window, text="Ingrese Fecha Registro peso", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_date = Label(imc_data_window, text="Ingrese Fecha Registro peso (ej. dd-mm-aaaa)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_date.pack()
     entry_user_date = Entry(imc_data_window, textvariable = imc_date_entry)
     entry_user_date.insert(0, hf.getDate())
     entry_user_date.pack()
     Label(imc_data_window, text="").pack()
 
-    label_user_time = Label(imc_data_window, text="Ingrese Hora registro peso", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_time = Label(imc_data_window, text="Ingrese Hora registro peso (ej. hh:mm)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_time.pack()
     entry_user_time = Entry(imc_data_window, textvariable = imc_time_entry)
     entry_user_time.insert(0, hf.getTime())
     entry_user_time.pack()
     Label(imc_data_window, text="").pack()
 
-    label_user_weight = Label(imc_data_window, text="Ingrese peso en kg", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_weight = Label(imc_data_window, text="Ingrese peso en kg (solo número)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_weight.pack()
     entry_user_weight = Entry(imc_data_window, textvariable = imc_weight_entry)
     entry_user_weight.pack()
@@ -60,12 +60,12 @@ def imcDataWindow(userEmail, gender):
     Button(imc_data_window, text="Cancelar y Salir", command = lambda: wb.deleteWindow(imc_data_window), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
 
     def startImcCalculator(mail, date, time, weight, height, gender):
-        isImcDataValid = hv.validateImcData(date, time, weight, height)
-        if(isImcDataValid['response']):
+        isValidImcData = hv.validateImcData(date, time, weight, height)
+        if(isValidImcData['response']):
             userImcResult = float(himc.calculateImc(weight, height))
             userGender = gender.upper()
             db.saveImcDataUser(mail, date, time, weight, height, userImcResult)        
             irw.imcReportWindow(mail, userGender)
             wb.deleteWindow(imc_data_window)
         else:
-            wb.alertWindow("Error!", isImcDataValid['message'])
+            wb.alertWindow("Error!", isValidImcData['message'])

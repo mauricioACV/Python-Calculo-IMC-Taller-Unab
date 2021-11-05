@@ -53,14 +53,12 @@ def dataPersonWindow(email):
     entry_user_gender.pack()
 
     Label(data_person_window, text="").pack()
-    Button(data_person_window, text="Registrarse", command= lambda: saveDataPerson(email, entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get()), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
+    Button(data_person_window, text="Registrame", command= lambda: saveDataPerson(email, entry_user_name.get(), entry_user_last.get(), entry_user_gender.get(), entry_user_age.get()), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
 
     def saveDataPerson(mail, name, lastName, gender, age):
-        global user_gender_global
-        isPersonDataValid = hv.validateDataPerson(name, lastName, gender, age)
-        if(isPersonDataValid['response']):
-            user_gender_global = gender
+        isValidDataPerson = hv.validateDataPerson(name, lastName, gender, age)
+        if(isValidDataPerson['response']):
             db.saveDataUser(mail, name, lastName, age, gender)
             wb.successWindow("Éxito", "Datos de usuario registados correctamente", data_person_window)
         else:
-            wb.alertWindow("Error!", isPersonDataValid['message'])
+            wb.alertWindow("Error!", isValidDataPerson['message'])
