@@ -8,11 +8,7 @@ def personDataWindow(email):
     data_person_window = Toplevel()
     data_person_window.title("Datos Persona")
     data_person_window.geometry('800x600')
-
-    global user_name_entry
-    global user_last_name_entry
-    global user_age_entry
-    global user_gender_entry
+    
     user_name_entry = StringVar()
     user_last_name_entry = StringVar()
     user_age_entry = StringVar()

@@ -13,10 +13,6 @@ def imcDataWindow(userEmail, gender):
     imc_data_window.title("Datos para calcular IMC")
     imc_data_window.geometry('800x600')
 
-    global imc_date_entry
-    global imc_time_entry
-    global imc_weight_entry
-    global user_height_entry
     imc_date_entry = StringVar()
     imc_time_entry = StringVar()
     imc_weight_entry = StringVar()

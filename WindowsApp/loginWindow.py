@@ -10,9 +10,7 @@ def loginWindow():
     login_window.overrideredirect(True)
     login_window.title("Inicio de Sesión")
     login_window.geometry('800x600')
-
-    global user_email_entry
-    global user_pass_entry
+    
     user_mail_entry = StringVar()
     user_pass_entry = StringVar()
 
