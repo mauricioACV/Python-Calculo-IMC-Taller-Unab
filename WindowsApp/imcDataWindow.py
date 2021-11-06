@@ -1,8 +1,8 @@
 from tkinter import *
 from WindowsApp import ImcReportWindow as irw
 from Handlers import handlerUserDataPersistence as db
+from Handlers import handlerWindowValidation as hv
 from Handlers import handlerImc as himc
-from Helpers import helpersWindowValidation as hv
 from Helpers import helpersFunctions as hf
 from Behaviors import windowBehavior as wb
 
@@ -27,9 +27,12 @@ def imcDataWindow(userEmail, gender):
         if(isValidImcData['response']):
             userImcResult = float(himc.calculateImc(weight, height))
             userGender = gender.upper()
-            db.saveImcDataUser(mail, date, time, weight, height, userImcResult)        
-            irw.imcReportWindow(mail, userGender)
-            wb.deleteWindow(imc_data_window)
+            successfulProcess = db.saveImcDataUser(mail, date, time, weight, height, userImcResult)
+            if successfulProcess:        
+                irw.imcReportWindow(mail, userGender)
+                wb.deleteWindow(imc_data_window)
+            else:
+                wb.alertWindow("Error!", "Ocurrio un problema al registrar datos de IMC... Contacte a mesa de ayuda.")
         else:
             wb.alertWindow("Error!", isValidImcData['message'])
 
@@ -40,21 +43,21 @@ def imcDataWindow(userEmail, gender):
     Label(imc_data_window, text="Género: " + gender.upper(), height=2, width=50, font=('Comic sens MC',11,'bold'), activebackground="aqua", bg='#B5ACD8').pack()
     Label(imc_data_window, text="").pack()
 
-    label_user_date = Label(imc_data_window, text="Ingrese Fecha Registro peso (ej. dd-mm-aaaa)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_date = Label(imc_data_window, text="Ingrese Fecha (ej. dd-mm-aaaa)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_date.pack()
     entry_user_date = Entry(imc_data_window, textvariable = imc_date_entry)
     entry_user_date.insert(0, hf.getDate())
     entry_user_date.pack()
     Label(imc_data_window, text="").pack()
 
-    label_user_time = Label(imc_data_window, text="Ingrese Hora registro peso (ej. hh:mm)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_time = Label(imc_data_window, text="Ingrese Hora (ej. hh:mm)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_time.pack()
     entry_user_time = Entry(imc_data_window, textvariable = imc_time_entry)
     entry_user_time.insert(0, hf.getTime())
     entry_user_time.pack()
     Label(imc_data_window, text="").pack()
 
-    label_user_weight = Label(imc_data_window, text="Ingrese peso en kg (solo número)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
+    label_user_weight = Label(imc_data_window, text="Ingrese peso kg (solo número)", height=1, width=25, font=('Comic sens MC',11), relief="raised", bg='#B3B9B7')
     label_user_weight.pack()
     entry_user_weight = Entry(imc_data_window, textvariable = imc_weight_entry)
     entry_user_weight.pack()

@@ -1,9 +1,9 @@
 from tkinter import *
 from Handlers import handlerUserDataPersistence as db
-from Helpers import helpersWindowValidation as hv
+from Handlers import handlerWindowValidation as hv
 from Behaviors import windowBehavior as wb
 
-def dataPersonWindow(email):
+def personDataWindow(email):
     global data_person_window
     data_person_window = Toplevel()
     data_person_window.title("Datos Persona")
@@ -21,8 +21,11 @@ def dataPersonWindow(email):
     def handleSaveDataPerson(mail, name, lastName, gender, age):
         isValidDataPerson = hv.validateDataPerson(name, lastName, gender, age)
         if(isValidDataPerson['response']):
-            db.saveDataUser(mail, name, lastName, age, gender)
-            wb.successWindow("Éxito", "Datos de usuario registados correctamente", data_person_window)
+            successfulProcess = db.saveDataUser(mail, name, lastName, age, gender)
+            if successfulProcess:
+                wb.successWindow("Éxito", "Datos de usuario registados correctamente", data_person_window)
+            else:
+                wb.alertWindow("Error!", "Ocurrio un problema al registrar los datos... Contacte a mesa de ayuda.")
         else:
             wb.alertWindow("Error!", isValidDataPerson['message'])
 

@@ -1,7 +1,7 @@
 from tkinter import *
 from WindowsApp import appUserOptionsWindow as uow
 from Handlers import handlerUserDataPersistence as db
-from Helpers import helpersWindowValidation as hv
+from Handlers import handlerWindowValidation as hv
 from Behaviors import windowBehavior as wb
 
 def loginWindow():    

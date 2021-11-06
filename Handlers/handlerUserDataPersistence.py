@@ -3,27 +3,46 @@ import json
 import ast
 
 def saveUserCredentials(userName, userPass):
-    file = open("Data/"+ userName.lower() +"_credentials", "a")
-    userCredentials = {'userName':userName.upper(), 'userPass':userPass}
-    jsonCredentials = json.dumps(userCredentials)
-    file.write(jsonCredentials + "\n")
-    file.close()
+    try:
+        file = open("Data/"+ userName.lower() +"_credentials", "a")
+        userCredentials = {'userName':userName.upper(), 'userPass':userPass}
+        jsonCredentials = json.dumps(userCredentials)
+        file.write(jsonCredentials + "\n")
+    except:
+        file.close()
+        return False
+    finally:
+        file.close()
+        return True
 
 def saveDataUser(userMail, userName, userLastName, userAge, userGender):
-    file = open("Data/"+ userMail.lower() +"_data_user", "a")
-    file2 = open("Data/"+ userMail.lower() +"_imc_history", "a")
-    dataUser = {'userMail':userMail.upper(), 'name':userName.upper(), 'lastName':userLastName.upper(), 'age':userAge, 'gender':userGender.upper()}
-    jsonDataUser = json.dumps(dataUser)
-    file.write(jsonDataUser + "\n")
-    file.close()
-    file2.close()
+    try:        
+        file = open("Data/"+ userMail.lower() +"_data_user", "a")
+        file2 = open("Data/"+ userMail.lower() +"_imc_history", "a")
+        dataUser = {'userMail':userMail.upper(), 'name':userName.upper(), 'lastName':userLastName.upper(), 'age':userAge, 'gender':userGender.upper()}
+        jsonDataUser = json.dumps(dataUser)
+        file.write(jsonDataUser + "\n")
+    except:
+        file.close()
+        file2.close()
+        return False
+    finally:
+        file.close()
+        file2.close()
+        return True
 
 def saveImcDataUser(userMail, date, time, weight, height, imc):
-    file = open("Data/"+ userMail.lower() +"_imc_history", "a")
-    userImc = {'date':date, 'time':time, 'weight':weight, 'height':height, 'imc':str(imc)}
-    jsonUserImc = json.dumps(userImc)
-    file.write(jsonUserImc + "\n")
-    file.close()
+    try:
+        file = open("Data/"+ userMail.lower() +"_imc_history", "a")
+        userImc = {'date':date, 'time':time, 'weight':weight, 'height':height, 'imc':str(imc)}
+        jsonUserImc = json.dumps(userImc)
+        file.write(jsonUserImc + "\n")
+    except:
+        file.close()
+        return False
+    finally:
+        file.close()
+        return True
 
 def getUserPassword(userEmail):
     path = open("Data/"+ userEmail.lower() + "_credentials", "r")

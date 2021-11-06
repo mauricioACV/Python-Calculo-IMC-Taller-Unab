@@ -1,5 +1,5 @@
 from tkinter import *
-from WindowsApp import registerWindow as rw
+from WindowsApp import registerDataWindow as rw
 from WindowsApp import loginWindow as lw
 from Behaviors import windowBehavior as wb    
 # *************************************************************************************************
@@ -19,7 +19,7 @@ def mainWindow():
     Label(text="CALCULADORA ÍNDICE MASA CORPORAL", height=2, width=60, font=('Comic sens MC',14,'bold'), relief="raised", activebackground="aqua", bg='#1AACC1').pack()
     
     Label(text="").pack()
-    Button(text="Registrate antes de utilizar la app", command = rw.registerWindow, borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center").pack()
+    Button(text="Registrate antes de utilizar la app", command = rw.registerDataWindow, borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center").pack()
     
     Label(text="").pack()
     Button(text="Inicia Sesión si ya eres usuario registrado", command = lw.loginWindow, borderwidth=2, height=2, width=35, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#999AB8', anchor="center").pack()

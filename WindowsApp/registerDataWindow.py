@@ -1,10 +1,10 @@
 from tkinter import *
-from WindowsApp import dataPersonWindow as dpw
+from WindowsApp import personDataWindow as dpw
 from Handlers import handlerUserDataPersistence as db
-from Helpers import helpersWindowValidation as hv
+from Handlers import handlerWindowValidation as hv
 from Behaviors import windowBehavior as wb
 
-def registerWindow():    
+def registerDataWindow():    
     global register_window
     register_window = Toplevel()
     register_window.overrideredirect(True)
@@ -22,9 +22,12 @@ def registerWindow():
             if(db.isRegisteredUser(email)):
                 wb.alertWindow("Error!", "Error Usuario Existente, intente con otro correo electrónico")
             else:            
-                db.saveUserCredentials(email, password)
-                dpw.dataPersonWindow(email)
-                wb.deleteWindow(register_window)
+                successfulProcess = db.saveUserCredentials(email, password)
+                if successfulProcess:
+                    dpw.personDataWindow(email)
+                    wb.deleteWindow(register_window)
+                else:
+                    wb.alertWindow("Error!", "Ocurrio un problema al registrar datos... Contacte a mesa de ayuda.")
         else:
             wb.alertWindow("Error!", isValidCredentialFormat['message'])
 

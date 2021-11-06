@@ -32,5 +32,5 @@ def validateImcData(date, time, weight, height):
     if not hf.onlyIntNumbers(weight):
         return {'response':False, 'message':'Peso no válido, \n el formato requerido es solo número entero en kg.'}
     if not hf.validHeight(height):
-        return {'response':False, 'message':'Altura no válida, \n el formato requerido es un número entero y dos decimales ej: 1.90'}
+        return {'response':False, 'message':'Altura no válida, \n el formato requerido es número entero y dos decimales ej: 1.90'}
     return {'response':True}
