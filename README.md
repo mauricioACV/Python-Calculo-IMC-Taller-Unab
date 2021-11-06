@@ -1,46 +1,61 @@
 # Proyecto Aplicación Cálculo de Índice de Masa Corporal.
 
-Proyecto React JS. Desarrollado para la entrega del sprint N°2 curso Desarrollo Web Front End - Acamica.
+Aplicación que permite calcular el Índice de Masa Corporal.  
+Desarrollada para actividad taller curso Testing y Calidad de Software - Universidad Andrés Bello.  
+Chile.  
 
-## Decripción del Desarrollo del Proyecto
+## Como Iniciar Aplicación
 
-Para el desarrollo se consideraron los detalles siguientes:
+Detalle de consideraciones a tener en cuenta para el despliegue de la aplicación
 
-### `Hook useState`
+### `Versión de Python`
 
-Se utilizó el hook useState para el manejo de estado de los filtros de la app. Bajo el concepto del "prop drilling" que se refiere al proceso de obtener datos en partes del árbol de componentes react, y así, llevar el estado y el manejador del useState a los lugares correctos de nuestra app.
+Para el desarrollo de esta app se tuliza python en su versión 3.9.1
 
-### `Componentes`
+### `Desarrollo UI con Tkinter`
 
-Se crea dentro de carpeta "src" una subcarpeta llamada "components" para alojar los distintos componentes de la app.
+Para el desarrollo de interfaces de usuario se utilizo la biblioteca Tkinter.  
+Tkinter es un binding de la biblioteca gráfica Tcl/Tk para el lenguaje de programación Python. Se considera un estándar para la interfaz gráfica de usuario (GUI) para Python y es el que viene por defecto con la instalación para Microsoft Windows.
 
--FiltrosNav: Componente que renderiza una barra nav con las distintas opciones de filtrado.
--Header: Componente que renderiza el header de la página, y que además muestra al usuario, en lenguaje natural, las opciones de filtrado seleccionadas. 
--Hotel: Componente "card" para mostrar la información correspndiente a un Hotel.
--Resultados: Componente que renderiza los resultados de hoteles según las opciones seleccionadas.
--Main: Componente que instancia los componentes anteriormente descritos para construir la app completa. Este componente es el que finalmente se instancia en app.js
+### `Despliegue`
 
-### `Data`
+Para iniciar la app solo debe utilizar el comando "python main.py" desde una terminal. Para ejecutar el comando, se debe abrir la terminal en la raíz del directorio del proyecto, asumiendo que su versión de python incluye por defecto la biblioteca de Tkinter, en caso contrario deberá instalar dicha biblioteca.
 
-Se crea dentro de carpeta "src" una subcarpeta llamada "data", la que contiene un archivo llamado data.js, y este ultimo es donde reside la data de todos los hoteles.
-simula data que usualmente la obtendría desde un endpoint.
+## Detalle de Componentes
 
-### `Enumeraciones`
+Se entrega a continuación una breve descripción de los componentes que integran la aplicación, y el contenido de cada uno de ellos.
+### `Componente WindowsApp`
 
-Se crea dentro de carpeta "src" una subcarpeta llamada "enums", que contiene archivos javascript con datos constantes que utilizo dentro de la app.
+Este componente contiene las ventanas UI de la aplicación:  
 
-### `Helpers`
+- main.py: Ventana incial que muestra un menú con opciones para registrarse en caso de ser usuario nuevo, o iniciar sesión si ya eres usuario registrado.  
+- registerDataWindow.py: Ventana formulario que permite ingresar un email y contraseña para registrar una cuenta de usuario antes de pasar a registrar los datos personales.
+- personDataWindow.py: Ventana formulario que permite ingresar los datos personales para registrar un usuario en la aplicación.  
+- loginWindow.py: Ventana formulario que permite a un usuario registrado poder inicar sesión para utilizar la aplicación.  
+- appUserOptionsWindows.py: Ventana que contiene las opciones a las que puede acceder un usuario registrado (calcular IMC y Revisar Historial IMC).  
+- imcDataWindow.py: Ventana formulario que permite al usuario ingresar los datos necesarios para el calculo del IMC (fecha, hora, peso y estarura).  
+- imcReportWindow.py: Ventana que muestra el historial de IMC registrados por un usuario.  
 
-Se crea dentro de carpeta "src" una subcarpeta llamada "helpers", que contiene archivos javascript con funciones que utilizo para manejar datos en componentes.
+En el caso de los archivos registerDatawindow.py, personDataWindow.py, loginWindow.py e imcDataWindow.py, dentro de cada una de estos se define una función que maneja la funcionalidad de la ventana, y que se dispara desde el botón de acción de cada una de ellas. Su trabajo es la de tomar los valores de las entradas de formulario y enviarlos a los componentes que los gestionan para ser procesados.
 
-### `Imgs`
+### `Componente Helpers`
 
-Se crea dentro de carpeta "src" una subcarpeta llamada "imgs", que contiene subcarpetas para alojar archivos svg, png y las imágenes para las card de hoteles.
+La carpeta Helpers contiene un archivo llamado "helpersFunctions.py". Este contiene 9 funciones que evaluan un input dado se encuentré dentro de lo esperado para el funcionamiento de la aplicación y que su retorno es de tipo boolean. Además contiene 2 funciones que retornan la fecha y hora actual.
 
-## CodeSanbox del Proyecto
+### `Componente Handler`
 
-Puedes revisar el código de esta app y modificarlo online [haciendo click aquí](https://codesandbox.io/s/proyecto-hotel-react-4th5k).
+Este componente contiene 3 archivos:  
 
-### Enlace del Proyecto
+El primero llamado handlerImc.py define 4 funciones, una para calcular el imc, otras dos para evaluar el rango de imc en que se encuentra el valor dado, una para hombre y otra para mujer, y una cuarta función que integra las dos anteriores.  
+  
+El segundo archivo llamado handlerUserDataPersistence.py define 7 funciones para el manejo de datos persistente de la app. 3 de estas funciones graban datos en fotmato json en archivos planos y no retornan nada (no hay control de excepciones), las otras 4 funciones si retornar data, y se utilizan para recuperar datos desde el repositorio de archivos planos.  
+  
+El tercer archivo llamado handlerWindowValidation.py define 3 funciones que se utilizan para validar las entradas de datos desde las ventanas para ingreso de credenciales (ventanas de registro y login), ingreso de datos de persona y el ingreso de datos de IMC. Estas funciones definen retorno en formato de tipo diccionario python, con el objetivo de proporcionar una propiedad llamada ‘response’ de tipo boolean y otra propiedad llamada ‘message’ que se utiliza para entregar información en caso de que ‘response’ sea false, por ejemplo, si en el formulario de datos personales el usuario ingresa un género no válido, la validación retornaría ‘response’ en false y en ‘message’ indicaría que el género es el problema.  
 
-Puedes utilizar la app en el siguiente enlace: [https://4th5k.csb.app/](https://4th5k.csb.app/).
+### `Componente Behaviors`  
+
+Componente que contiene un archivo llamado windowBehavior.py, el cual define 4 funciones para manejar comportamientos como ventanas de alerta, de éxito y cierre.
+
+### `Carpeta Data`  
+
+Esta carpeta es requerida por la aplicación para persistir datos en archivos planos.
