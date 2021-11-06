@@ -22,6 +22,17 @@ def imcDataWindow(userEmail, gender):
     imc_weight_entry = StringVar()
     user_height_entry = StringVar()
 
+    def handleImcCalculation(mail, date, time, weight, height, gender):
+        isValidImcData = hv.validateImcData(date, time, weight, height)
+        if(isValidImcData['response']):
+            userImcResult = float(himc.calculateImc(weight, height))
+            userGender = gender.upper()
+            db.saveImcDataUser(mail, date, time, weight, height, userImcResult)        
+            irw.imcReportWindow(mail, userGender)
+            wb.deleteWindow(imc_data_window)
+        else:
+            wb.alertWindow("Error!", isValidImcData['message'])
+
     Label(imc_data_window, text="").pack()
     Label(imc_data_window, text="Datos Cálculo IMC: " + userEmail, height=2, width=60, font=('Comic sens MC',14,'bold'), activebackground="aqua", bg='#1AACC1').pack()
     Label(imc_data_window, text="").pack()
@@ -55,17 +66,6 @@ def imcDataWindow(userEmail, gender):
     entry_user_height.pack()
     Label(imc_data_window, text="").pack()
 
-    Button(imc_data_window, text="Calcular IMC", command= lambda: startImcCalculator(userEmail , entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), gender), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
+    Button(imc_data_window, text="Calcular IMC", command= lambda: handleImcCalculation(userEmail , entry_user_date.get(), entry_user_time.get(), entry_user_weight.get(), entry_user_height.get(), gender), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
     Label(imc_data_window, text="").pack()
     Button(imc_data_window, text="Cancelar y Salir", command = lambda: wb.deleteWindow(imc_data_window), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
-
-    def startImcCalculator(mail, date, time, weight, height, gender):
-        isValidImcData = hv.validateImcData(date, time, weight, height)
-        if(isValidImcData['response']):
-            userImcResult = float(himc.calculateImc(weight, height))
-            userGender = gender.upper()
-            db.saveImcDataUser(mail, date, time, weight, height, userImcResult)        
-            irw.imcReportWindow(mail, userGender)
-            wb.deleteWindow(imc_data_window)
-        else:
-            wb.alertWindow("Error!", isValidImcData['message'])

@@ -15,6 +15,22 @@ def loginWindow():
     global user_pass_entry
     user_mail_entry = StringVar()
     user_pass_entry = StringVar()
+
+    def handleUserLogin(userEmail, password):
+        isValidCredentialFormat = hv.validateFormatCredentials(userEmail, password)
+        if(isValidCredentialFormat['response']):
+            if(db.isRegisteredUser(userEmail)):
+                dbUserPass = db.getUserPassword(userEmail)
+                if dbUserPass == password:
+                    dbUserGender = db.getUserGender(userEmail)
+                    uow.appUserOptionsWindow(userEmail, dbUserGender)
+                    wb.deleteWindow(login_window)
+                else:
+                    wb.alertWindow("Error!", "Error, Contraseña Incorrecta")
+            else:
+                wb.alertWindow("Error!", "Error, Usuario no registrado")                
+        else:
+            wb.alertWindow("Error!", isValidCredentialFormat['message'])
     
     Label(login_window, text="").pack()
     Label(login_window, text="Iniciar Sesión", height=2, width=60, font=('Comic sens MC',14,'bold'), activebackground="aqua", bg='#1AACC1').pack()
@@ -33,22 +49,6 @@ def loginWindow():
     entry_user_pass.pack()
     Label(login_window, text="").pack()
 
-    Button(login_window, text="Iniciar Sesión",command= lambda: starLogin(entry_user_email.get(), entry_user_pass.get()), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
+    Button(login_window, text="Iniciar Sesión",command= lambda: handleUserLogin(entry_user_email.get(), entry_user_pass.get()), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#3BE3B0', anchor="center").pack()
     Label(login_window, text="").pack()
     Button(login_window, text="Cancelar y Salir", command = lambda: wb.deleteWindow(login_window), borderwidth=2, height=2, width=25, font=('Comic sens MC',12,'bold'), relief="raised", activebackground="aqua", bg='#E33B3B', anchor="center").pack()
-
-    def starLogin(userEmail, password):
-        isValidCredentialFormat = hv.validateFormatCredentials(userEmail, password)
-        if(isValidCredentialFormat['response']):
-            if(db.isRegisteredUser(userEmail)):
-                dbUserPass = db.getUserPassword(userEmail)
-                if dbUserPass == password:
-                    dbUserGender = db.getUserGender(userEmail)
-                    uow.appUserOptionsWindow(userEmail, dbUserGender)
-                    wb.deleteWindow(login_window)
-                else:
-                    wb.alertWindow("Error!", "Error, Contraseña Incorrecta")
-            else:
-                wb.alertWindow("Error!", "Error, Usuario no registrado")                
-        else:
-            wb.alertWindow("Error!", isValidCredentialFormat['message'])
