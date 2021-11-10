@@ -11,7 +11,10 @@ Detalle de consideraciones a tener en cuenta para el despliegue de la aplicació
 ### `Versión de Python`
 
 Para el desarrollo de esta app se utilizó python en su versión 3.9.1
+<<<<<<< HEAD
 
+=======
+>>>>>>> 661db2904f5c1ddd188d98a3d350e17b1833e86e
 
 ### `Desarrollo UI con Tkinter`
 
@@ -62,4 +65,3 @@ Componente que contiene un archivo llamado windowBehavior.py, el cual define 4 f
 ### `Carpeta Data`  
 
 Esta carpeta es requerida por la aplicación para persistir datos en archivos planos.
-
