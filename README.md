@@ -10,7 +10,7 @@ Detalle de consideraciones a tener en cuenta para el despliegue de la aplicació
 
 ### `Versión de Python`
 
-Para el desarrollo de esta app se tuliza python en su versión 3.9.1
+Para el desarrollo de esta app se utilizó python en su versión 3.9.1
 
 ### `Desarrollo UI con Tkinter`
 
