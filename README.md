@@ -34,11 +34,11 @@ Este componente contiene las ventanas UI de la aplicación:
 - registerDataWindow.py: Ventana formulario que permite ingresar un email y contraseña para registrar una cuenta de usuario antes de pasar a registrar los datos personales.
 - personDataWindow.py: Ventana formulario que permite ingresar los datos personales para registrar un usuario en la aplicación.  
 - loginWindow.py: Ventana formulario que permite a un usuario registrado poder inicar sesión para utilizar la aplicación.  
-- appUserOptionsWindows.py: Ventana que contiene las opciones a las que puede acceder un usuario registrado (calcular IMC y Revisar Historial IMC).  
+- appUserOptionsWindow.py: Ventana que contiene las opciones a las que puede acceder un usuario registrado (calcular IMC y Revisar Historial IMC).  
 - imcDataWindow.py: Ventana formulario que permite al usuario ingresar los datos necesarios para el cálculo del IMC (fecha, hora, peso y estatura).  
 - imcReportWindow.py: Ventana que muestra el historial de IMC registrados por un usuario.  
 
-En el caso de los archivos registerDatawindow.py, personDataWindow.py, loginWindow.py e imcDataWindow.py, dentro de cada una de estos se define una función que maneja la funcionalidad de la ventana, y que se dispara desde el botón de acción de cada una de ellas. Su trabajo es la de tomar los valores de las entradas de formulario y enviarlos a los componentes que los gestionan para ser procesados.
+En el caso de los archivos registerDatawindow.py, personDataWindow.py, loginWindow.py e imcDataWindow.py, dentro de cada una de ellos se define una función que maneja la funcionalidad de la ventana, y que se dispara desde el botón de acción de cada una de ellas. Su trabajo es la de tomar los valores de las entradas de formulario y enviarlos a los componentes que los gestionan para ser procesados.
 
 ### `Componente Helpers`
 
