@@ -38,7 +38,7 @@ Este componente contiene las ventanas UI de la aplicación:
 - imcDataWindow.py: Ventana formulario que permite al usuario ingresar los datos necesarios para el cálculo del IMC (fecha, hora, peso y estatura).  
 - imcReportWindow.py: Ventana que muestra el historial de IMC registrados por un usuario.  
 
-En el caso de los archivos registerDatawindow.py, personDataWindow.py, loginWindow.py e imcDataWindow.py, dentro de cada una de ellos se define una función que maneja la funcionalidad de la ventana, y que se dispara desde el botón de acción de cada una de ellas. Su trabajo es la de tomar los valores de las entradas de formulario y enviarlos a los componentes que los gestionan para ser procesados.
+En el caso de los archivos registerDatawindow.py, personDataWindow.py, loginWindow.py e imcDataWindow.py, dentro de cada una de ellos se define una función que maneja la funcionalidad de la ventana, y que se dispara desde el botón de acción de cada una de ellas. Su trabajo es la de tomar los valores de las entradas de formulario y enviarlos al componente que los procesa.
 
 ### `Componente Helpers`
 
