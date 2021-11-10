@@ -25,7 +25,7 @@ Para iniciar la app solo debe utilizar el comando "python main.py" desde una ter
 
 Se entrega a continuación una breve descripción de los componentes que integran la aplicación, y el contenido de cada uno de ellos.  
 
-main.py: Este archivo se encuentra en la raíz del proyecto, y es la ventana incial que muestra un menú con opciones para registrarse en caso de ser usuario nuevo, o iniciar sesión si ya eres usuario registrado.  
+- main.py: Este archivo se encuentra en la raíz del proyecto, y es la ventana incial que muestra un menú con opciones para registrarse en caso de ser usuario nuevo, o iniciar sesión si ya eres usuario registrado.  
 
 ### `Componente WindowsApp`
 
