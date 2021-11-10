@@ -42,7 +42,7 @@ En el caso de los archivos registerDatawindow.py, personDataWindow.py, loginWind
 
 ### `Componente Helpers`
 
-La carpeta Helpers contiene un archivo llamado "helpersFunctions.py". Este contiene 9 funciones que evaluan que un input dado se encuentré dentro de patrones pre-definidos para el correcto funcionamiento de la aplicación, y que su retorno es de tipo boolean. Además contiene 2 funciones que retornan la fecha y hora actual.
+La carpeta Helpers contiene un archivo llamado "helpersFunctions.py". Este contiene 9 funciones que evaluan que un input dado se encuentré dentro de patrones pre-definidos para el correcto funcionamiento de la aplicación, y su retorno es de tipo boolean. Además contiene 2 funciones que retornan la fecha y hora actual.
 
 ### `Componente Handler`
 
