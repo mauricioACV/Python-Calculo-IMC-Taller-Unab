@@ -23,12 +23,14 @@ Para iniciar la app solo debe utilizar el comando "python main.py" desde una ter
 
 ## Detalle de Componentes
 
-Se entrega a continuación una breve descripción de los componentes que integran la aplicación, y el contenido de cada uno de ellos.
+Se entrega a continuación una breve descripción de los componentes que integran la aplicación, y el contenido de cada uno de ellos.  
+
+main.py: Este archivo se encuentra en la raíz del proyecto, y es la ventana incial que muestra un menú con opciones para registrarse en caso de ser usuario nuevo, o iniciar sesión si ya eres usuario registrado.  
+
 ### `Componente WindowsApp`
 
 Este componente contiene las ventanas UI de la aplicación:  
 
-- main.py: Ventana incial que muestra un menú con opciones para registrarse en caso de ser usuario nuevo, o iniciar sesión si ya eres usuario registrado.  
 - registerDataWindow.py: Ventana formulario que permite ingresar un email y contraseña para registrar una cuenta de usuario antes de pasar a registrar los datos personales.
 - personDataWindow.py: Ventana formulario que permite ingresar los datos personales para registrar un usuario en la aplicación.  
 - loginWindow.py: Ventana formulario que permite a un usuario registrado poder inicar sesión para utilizar la aplicación.  
